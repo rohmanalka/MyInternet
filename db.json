@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "93ee",
+      "username": "rohmanalka",
+      "password": "12345"
+    }
+  ],
+
+  "products": [
+{
+      "id": 1,
+      "name": "Combo Super",
+      "size": "12GB",
+      "duration": "30 Hari",
+      "price": "Rp 85.000",
+      "priceValue": 85000
+    },
+    {
+      "id": 2,
+      "name": "Combo Murah",
+      "size": "12GB",
+      "duration": "30 Hari",
+      "price": "Rp 55.000",
+      "priceValue": 55000
+    },
+    {
+      "id": 3,
+      "name": "Kuota Harian",
+      "size": "6GB",
+      "duration": "30 Hari",
+      "price": "Rp 30.000",
+      "priceValue": 30000
+    },
+    {
+      "id": 4,
+      "name": "Combo Super",
+      "size": "12GB",
+      "duration": "30 Hari",
+      "price": "Rp 85.000",
+      "priceValue": 85000
+    }
+  ]
+}

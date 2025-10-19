@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Auth from "../pages/Auth.jsx";
 
 const drawerWidth = 240;
 const navItems = ['Bantuan', 'Masuk', 'Daftar'];
@@ -25,6 +26,9 @@ function Navbar(props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const [openAuth, setOpenAuth] = React.useState(false);
+  const [authTab, setAuthTab] = React.useState(1);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -110,29 +114,52 @@ function Navbar(props) {
           </Typography>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) =>
-              item === 'Daftar' ? (
-                <Button
-                  key={item}
-                  variant="contained"
-                  sx={{
-                    ml: 1,
-                    backgroundColor: '#1976d2',
-                    color: '#fff',
-                    borderRadius: 2,
-                    px: 2.5,
-                    '&:hover': { backgroundColor: '#1565c0' },
-                    boxShadow: '0px 2px 6px rgba(0,0,0,0.15)',
-                  }}
-                >
+            {navItems.map((item) => {
+              if (item === "Daftar") {
+                return (
+                  <Button
+                    key={item}
+                    variant="contained"
+                    sx={{
+                      ml: 1,
+                      backgroundColor: "#1976d2",
+                      color: "#fff",
+                      borderRadius: 2,
+                      px: 2.5,
+                      "&:hover": { backgroundColor: "#1565c0" },
+                      boxShadow: "0px 2px 6px rgba(0,0,0,0.15)",
+                    }}
+                    onClick={() => {
+                      setAuthTab(0);
+                      setOpenAuth(true);
+                    }}
+                  >
+                    {item}
+                  </Button>
+                );
+              }
+
+              if (item === "Masuk") {
+                return (
+                  <Button
+                    key={item}
+                    sx={{ color: "#000", fontWeight: 500 }}
+                    onClick={() => {
+                      setAuthTab(1);
+                      setOpenAuth(true);
+                    }}
+                  >
+                    {item}
+                  </Button>
+                );
+              }
+
+              return (
+                <Button key={item} sx={{ color: "#000", fontWeight: 500 }}>
                   {item}
                 </Button>
-              ) : (
-                <Button key={item} sx={{ color: '#000', fontWeight: 500 }}>
-                  {item}
-                </Button>
-              )
-            )}
+              );
+            })}
           </Box>
         </Toolbar>
       </AppBar>
@@ -155,6 +182,11 @@ function Navbar(props) {
           {drawer}
         </Drawer>
       </nav>
+      <Auth
+        open={openAuth}
+        handleClose={() => setOpenAuth(false)}
+        defaultTab={authTab}
+      />
     </Box>
   );
 }
