@@ -15,9 +15,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Auth from "../pages/Auth.jsx";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ["Bantuan"];
+const navItems = ["Bantuan", "Riwayat"];
 
 function Navbar(props) {
   const { window } = props;
@@ -27,6 +28,8 @@ function Navbar(props) {
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
   const container = window !== undefined ? () => window().document.body : undefined;
 
+  const navigate = useNavigate();
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -34,13 +37,16 @@ function Navbar(props) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {navItems.map((item) => {
+          if (item === "Riwayat" && !user) return null;
+          return (
+            <ListItem key={item} disablePadding>
+              <ListItemButton sx={{ textAlign: "left" }}>
+                <ListItemText primary={item} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
 
         {!user ? (
           <>
@@ -112,12 +118,18 @@ function Navbar(props) {
               </Box>
 
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                {navItems.map((item) => (
-                  <Button key={item} sx={{ color: "#000", fontWeight: 500 }}>
-                    {item}
-                  </Button>
-                ))}
-
+                {navItems.map((item) => {
+                  if (item === "Riwayat" && !user) return null;
+                    return (
+                      <Button
+                        key={item}
+                        sx={{ color: "#000", fontWeight: 500 }}
+                        onClick={() => navigate("/riwayat")}
+                      >
+                        {item}
+                      </Button>
+                    );
+                })}
                 {!user ? (
                   <>
                     <Button sx={{ color: "#000", fontWeight: 500 }} onClick={() => showAuth(1)}>

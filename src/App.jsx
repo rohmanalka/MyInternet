@@ -3,7 +3,10 @@ import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import LandingPage from "./pages/landingpage.jsx";
-import Transaksi from "./pages/Transaksi.jsx";
+import TransaksiTelkom from "./pages/transaksi/TransaksiTelkom.jsx";
+import TransaksiXl from "./pages/transaksi/TransaksiXl.jsx";
+import TransaksiTri from "./pages/transaksi/TransaksiTri.jsx";
+import RiwayatTransaksi from "./pages/RiwayatTransaksi.jsx";
 
 function App() {
   return (
@@ -12,7 +15,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/transaksi" element={<Transaksi />} />
+          <Route path="/transaksi/telkom" element={<TransaksiTelkom />} />
+          <Route path="/transaksi/xl" element={<TransaksiXl />} />
+          <Route path="/transaksi/tri" element={<TransaksiTri />} />
+          <Route path="/riwayat" element={<RiwayatTransaksi />} />
         </Routes>
         <Footer />
       </BrowserRouter>
