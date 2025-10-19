@@ -90,19 +90,23 @@
   "paymentMethods": [
     {
       "id": "1",
-      "name": "GoPay"
+      "name": "GoPay",
+      "logo": "gopay.png"
     },
     {
       "id": "2",
-      "name": "OVO"
+      "name": "OVO",
+      "logo": "ovo.png"
     },
     {
       "id": "3",
-      "name": "Dana"
+      "name": "Dana",
+      "logo": "dana.png"
     },
     {
       "id": "4",
-      "name": "Transfer Bank"
+      "name": "Transfer Bank",
+      "logo": "bank.png"
     }
   ],
   "transactions": [

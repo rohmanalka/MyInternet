@@ -201,7 +201,13 @@ const TransaksiTelkom = () => {
             </Card>
 
             {/* Pilihan Pembayaran */}
-            <Card className="shadow-md" sx={{ bgcolor: "rgba(255,255,255,0.4)", backdropFilter: "blur(8px)" }}>
+            <Card
+              className="shadow-md"
+              sx={{
+                bgcolor: "rgba(255,255,255,0.25)",
+                backdropFilter: "blur(10px)",
+              }}
+            >
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Pilih Metode Pembayaran</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -209,15 +215,25 @@ const TransaksiTelkom = () => {
                     <div
                       key={method.id}
                       onClick={() => setSelectedPaymentMethod(method)}
-                      className={`cursor-pointer rounded-lg p-4 text-center transition-all ${selectedPaymentMethod?.id === method.id ? "ring-2 ring-red-400" : "bg-gray-100"}`}
+                      className={`cursor-pointer rounded-2xl p-4 text-center transition-all border flex flex-col items-center justify-center
+                        ${
+                          selectedPaymentMethod?.id === method.id
+                            ? "ring-2 ring-red-400 bg-white/40"
+                            : "bg-white/10 border-white/20 hover:bg-white/20"
+                        } 
+                        backdrop-blur-md text-gray-800 shadow-inner`}
                     >
-                      {method.name}
+                      <img
+                        src={`../src/assets/payment/${method.logo}`}
+                        alt={method.name}
+                        className="w-10 h-10 object-contain mb-2 opacity-90"
+                      />
+                      <p className="text-sm font-semibold">{method.name}</p>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-
           </div>
 
           {/* Checkout */}

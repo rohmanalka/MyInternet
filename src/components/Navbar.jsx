@@ -33,7 +33,11 @@ function Navbar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MyInternet
+          <img 
+            src="/src/assets/images/logo.png" 
+            alt="MyInternet Logo" 
+            style={{ width: "120px", height: "auto", objectFit: "contain" }} 
+          />
       </Typography>
       <Divider />
       <List>
