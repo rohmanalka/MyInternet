@@ -1,19 +1,20 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar"; 
+import Box from "@mui/material/Box"; 
+import CssBaseline from "@mui/material/CssBaseline"; 
+import Divider from "@mui/material/Divider"; 
+import Drawer from "@mui/material/Drawer"; 
+import IconButton from "@mui/material/IconButton"; 
+import List from "@mui/material/List"; 
+import ListItem from "@mui/material/ListItem"; 
+import ListItemButton from "@mui/material/ListItemButton"; 
+import ListItemText from "@mui/material/ListItemText"; 
+import MenuIcon from "@mui/icons-material/Menu"; 
+import Toolbar from "@mui/material/Toolbar"; 
+import Typography from "@mui/material/Typography"; 
 import Button from "@mui/material/Button";
 import Auth from "../pages/Auth.jsx";
+import { useAuth } from "../context/AuthContext";
 
 const drawerWidth = 240;
 const navItems = ["Bantuan"];
@@ -21,31 +22,15 @@ const navItems = ["Bantuan"];
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [openAuth, setOpenAuth] = React.useState(false);
-  const [authTab, setAuthTab] = React.useState(1);
-  const [user, setUser] = React.useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const { user, logout, openAuth, setOpenAuth, authTab, showAuth, login } = useAuth();
 
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-  };
-
-  const handleLoginSuccess = (loggedUser) => {
-    localStorage.setItem("user", JSON.stringify(loggedUser));
-    setUser(loggedUser);
-    setOpenAuth(false);
-  };
-
   const container = window !== undefined ? () => window().document.body : undefined;
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MyData
+        MyInternet
       </Typography>
       <Divider />
       <List>
@@ -60,30 +45,20 @@ function Navbar(props) {
         {!user ? (
           <>
             <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  setAuthTab(1);
-                  setOpenAuth(true);
-                }}
-              >
+              <ListItemButton onClick={() => showAuth(1)}>
                 <ListItemText primary="Masuk" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  setAuthTab(0);
-                  setOpenAuth(true);
-                }}
-              >
+              <ListItemButton onClick={() => showAuth(0)}>
                 <ListItemText primary="Daftar" />
               </ListItemButton>
             </ListItem>
           </>
         ) : (
           <ListItem disablePadding>
-            <ListItemButton onClick={handleLogout}>
+            <ListItemButton onClick={logout}>
               <ListItemText primary="Keluar" />
             </ListItemButton>
           </ListItem>
@@ -109,7 +84,8 @@ function Navbar(props) {
             component="nav"
             position="static"
             sx={{
-              backgroundColor: "#fff",
+              backgroundColor: "rgba(255, 255, 255, 0.4)",
+              backdropFilter: "blur(10px)", 
               color: "#000",
               boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
               borderBottomLeftRadius: 16,
@@ -127,17 +103,13 @@ function Navbar(props) {
                 <MenuIcon />
               </IconButton>
 
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  flexGrow: 1,
-                  display: { xs: "none", sm: "block" },
-                  fontWeight: 600,
-                }}
-              >
-                MyData
-              </Typography>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+                <img 
+                  src="src/assets/images/Logo.png"  
+                  alt="Logo MyInternet" 
+                  style={{ height: 40 }} 
+                />
+              </Box>
 
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
                 {navItems.map((item) => (
@@ -148,13 +120,7 @@ function Navbar(props) {
 
                 {!user ? (
                   <>
-                    <Button
-                      sx={{ color: "#000", fontWeight: 500 }}
-                      onClick={() => {
-                        setAuthTab(1);
-                        setOpenAuth(true);
-                      }}
-                    >
+                    <Button sx={{ color: "#000", fontWeight: 500 }} onClick={() => showAuth(1)}>
                       Masuk
                     </Button>
                     <Button
@@ -168,20 +134,22 @@ function Navbar(props) {
                         "&:hover": { backgroundColor: "#1565c0" },
                         boxShadow: "0px 2px 6px rgba(0,0,0,0.15)",
                       }}
-                      onClick={() => {
-                        setAuthTab(0);
-                        setOpenAuth(true);
-                      }}
+                      onClick={() => showAuth(0)}
                     >
                       Daftar
                     </Button>
                   </>
                 ) : (
                   <Button
-                    color="error"
-                    variant="outlined"
-                    sx={{ ml: 2, borderRadius: 2 }}
-                    onClick={handleLogout}
+                    sx={{ 
+                      ml: 2,
+                      px: 2,
+                      borderRadius: 2,
+                      bgcolor: "#EE0000",
+                      color: "#fff",
+                      fontWeight: 500,
+                    }}
+                    onClick={logout}
                   >
                     Keluar
                   </Button>
@@ -212,7 +180,7 @@ function Navbar(props) {
         open={openAuth}
         handleClose={() => setOpenAuth(false)}
         defaultTab={authTab}
-        onLoginSuccess={handleLoginSuccess}
+        onLoginSuccess={login}
       />
     </>
   );
