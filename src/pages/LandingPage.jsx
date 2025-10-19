@@ -3,33 +3,42 @@ import LoginIcon from "@mui/icons-material/Login";
 import WifiIcon from "@mui/icons-material/Wifi";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const { user, showAuth } = useAuth();
+  const [products, setProducts] = useState([]);
 
-  const handleProviderClick = () => {
+  const handleProviderClick = (provider) => {
     if (user) {
-      navigate("/transaksi");
+      navigate(`/transaksi/${provider}`);
     } else {
       showAuth(1);
     }
   };
 
+useEffect(() => {
+  fetch("/db.json")
+    .then((res) => res.json())
+    .then((data) => {
+      setProducts(data.products);
+    })
+    .catch((err) => console.error(err));
+}, []);
+
   return (
     <main className="mx-[100px]">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center py-20 px-6 min-h-screen">
+      <section className="flex flex-col items-center justify-center text-center py-20 px-6 min-h-screen" id="beranda">
         <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-4">
           Selamat Datang di{" "}
-          <span className="text-[#1F51FF] font-extrabold italic">
-            MyInternet
-          </span>
+          <img src="src/assets/images/Logo.png" alt="MyInternet" className="inline-block w-50 h-12 mb-1" />
         </h1>
         <p className="max-w-2xl text-gray-700 text-sm md:text-base leading-relaxed">
           Solusi cerdas untuk menghemat pengeluaran internet Anda. Dengan
-          beragam provider seperti Telkomsel, Indosat, XL, hingga Tri.
-          MyInternet punya harga rahasia yang tidak Anda temukan di tempat lain.
+          beragam provider seperti Telkomsel, Indosat, XL, hingga Tri. MyInternet
+          punya harga rahasia yang tidak Anda temukan di tempat lain.
         </p>
         <div className="mt-8 bg-white/40 backdrop-blur-md shadow-lg text-[#003366] text-sm md:text-base italic font-medium px-6 py-4 rounded-xl max-w-xl">
           <q>
@@ -39,13 +48,11 @@ const LandingPage = () => {
         </div>
       </section>
 
-    {/* Cara Membeli Section */}
-      <section className="bg-white/40 backdrop-blur-md rounded-br-4xl rounded-tl-4xl shadow-lg mb-20 py-10 px-8 text-center">
+      {/* Cara Membeli Section */}
+      <section className="bg-white/40 backdrop-blur-md rounded-br-4xl rounded-tl-4xl shadow-lg mb-20 p-8 text-center">
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-10">
           Cara Membeli Paket Data di{" "}
-          <span className="text-[#1F51FF] italic font-extrabold">
-            MyInternet
-          </span>
+          <img src="src/assets/images/Logo.png" alt="MyInternet" className="inline-block w-50 h-10 mb-1" />
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -82,22 +89,75 @@ const LandingPage = () => {
       </section>
 
       {/* Provider Section */}
-      <section className="text-center py-16 px-6 bg-white/40 backdrop-blur-md rounded-br-4xl rounded-tl-4xl shadow-lg">
+      <section className="text-center p-8 mt-30 rounded-br-4xl rounded-tl-4xl">
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-10">
           Provider yang Tersedia
         </h2>
         <div className="flex flex-wrap justify-center gap-20">
-          {["telkom.png", "xl.png", "tri.jpg"].map((img, idx) => (
+          {["telkom", "xl", "tri"].map((prov) => (
             <img
-              key={idx}
-              src={`src/assets/provider/${img}`}
-              alt={img}
-              onClick={handleProviderClick}
+              key={prov}
+              src={`src/assets/provider/${prov}.png`}
+              alt={prov}
+              onClick={() => handleProviderClick(prov)}
               className="w-35 h-35 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300 cursor-pointer"
             />
           ))}
         </div>
-      </section>
+    </section>
+
+    {/* Penawaran Section */}
+    <section className="text-center p-8 mt-30 backdrop-blur-md rounded-br-4xl rounded-tl-4xl shadow-lg">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-10">
+            Penawaran Special Minggu Ini
+        </h2>
+        <div className="flex flex-wrap justify-center gap-8">
+            {products.filter(p => p.priceOld).length > 0 ? (
+            products
+                .filter(p => p.priceOld)
+                .map((item, idx) => (
+                <div
+                    key={idx}
+                    className="bg-white rounded-2xl shadow-lg w-48 p-4 relative overflow-hidden"
+                >
+                <div
+                    className={`absolute top-0 left-0 w-full py-1 text-xs text-white font-semibold ${
+                        item.provider === "telkom"
+                        ? "bg-red-500"
+                        : item.provider === "xl"
+                        ? "bg-blue-500"
+                        : item.provider === "tri"
+                        ? "bg-yellow-400"
+                        : "bg-gray-500"
+                    }`}
+                    >
+                    Penawaran
+                    </div>
+                    <div className="mt-6 text-start">
+                    <h3 className="font-semibold text-md">{item.name}</h3>
+                    <div className="flex items-baseline gap-12">
+                        <p className="text-2xl font-bold">{item.size}</p>
+                        <p className="text-sm text-gray-500">{item.duration}</p>
+                    </div>
+                    <hr className="border-gray-300 my-2" />
+                    <p className="text-gray-400 line-through text-sm">{item.priceOld}</p>
+                    <p className={`text-lg font-bold ${
+                        item.provider === "telkom"
+                        ? "text-red-500"
+                        : item.provider === "xl"
+                        ? "text-blue-500"
+                        : item.provider === "tri"
+                        ? "text-yellow-400"
+                        : "text-gray-500"
+                    }`}>{item.priceNew}</p>
+                    </div>
+                </div>
+                ))
+            ) : (
+            <p className="text-gray-500">Memuat penawaran...</p>
+            )}
+        </div>
+    </section>
     </main>
   );
 };
