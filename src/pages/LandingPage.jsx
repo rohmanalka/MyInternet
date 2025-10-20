@@ -124,7 +124,7 @@ useEffect(() => {
                   .map((item, idx) => (
                   <div
                     key={idx}
-                    onClick={() => handleProviderClick(item.provider)}  // ⬅️ Tambahkan ini
+                    onClick={() => handleProviderClick(item.provider)}
                     className="bg-white rounded-2xl shadow-lg w-48 p-4 relative overflow-hidden 
                     hover:-translate-y-2 transition-transform duration-300 cursor-pointer"
                   >

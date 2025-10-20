@@ -10,6 +10,7 @@ import RiwayatTransaksi from "./pages/RiwayatTransaksi.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import CustomerDashboard from "./pages/CustomerDashboard";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<CustomerDashboard />} />
           <Route path="/transaksi/telkom" element={<TransaksiTelkom />} />
           <Route path="/transaksi/xl" element={<TransaksiXl />} />
           <Route path="/transaksi/tri" element={<TransaksiTri />} />

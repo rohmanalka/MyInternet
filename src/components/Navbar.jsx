@@ -1,56 +1,64 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar"; 
-import Box from "@mui/material/Box"; 
-import CssBaseline from "@mui/material/CssBaseline"; 
-import Divider from "@mui/material/Divider"; 
-import Drawer from "@mui/material/Drawer"; 
-import IconButton from "@mui/material/IconButton"; 
-import List from "@mui/material/List"; 
-import ListItem from "@mui/material/ListItem"; 
-import ListItemButton from "@mui/material/ListItemButton"; 
-import ListItemText from "@mui/material/ListItemText"; 
-import MenuIcon from "@mui/icons-material/Menu"; 
-import Toolbar from "@mui/material/Toolbar"; 
-import Typography from "@mui/material/Typography"; 
-import Button from "@mui/material/Button";
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  MenuItem,
+  Toolbar,
+  Typography,
+  Button,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import Auth from "../pages/Auth.jsx";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ["Riwayat"];
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { user, logout, openAuth, setOpenAuth, authTab, showAuth, login } = useAuth();
 
-  const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
+  const navigate = useNavigate();
+  const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
   const container = window !== undefined ? () => window().document.body : undefined;
 
-  const navigate = useNavigate();
+  const navItems = [
+    ...(user ? ["Riwayat", "Dashboard"] : []),
+  ];
+
+  const handleNavigate = (item) => {
+    if (item === "Riwayat") navigate("/riwayat");
+    if (item === "Dashboard") navigate("/dashboard");
+  };
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-          <img 
-            src="/src/assets/images/logo.png" 
-            alt="MyInternet Logo" 
-            style={{ width: "120px", height: "auto", objectFit: "contain" }} 
-          />
+        <img
+          src="/src/assets/images/logo.png"
+          alt="MyInternet Logo"
+          style={{ width: "120px", height: "auto", objectFit: "contain" }}
+          onClick={() => navigate("/")}
+        />
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => {
-          if (item === "Riwayat" && !user) return null;
-          return (
-            <ListItem key={item} disablePadding>
-              <ListItemButton sx={{ textAlign: "left" }}>
-                <ListItemText primary={item} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding>
+            <ListItemButton onClick={() => handleNavigate(item)}>
+              <ListItemText primary={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
 
         {!user ? (
           <>
@@ -59,7 +67,6 @@ function Navbar(props) {
                 <ListItemText primary="Masuk" />
               </ListItemButton>
             </ListItem>
-
             <ListItem disablePadding>
               <ListItemButton onClick={() => showAuth(0)}>
                 <ListItemText primary="Daftar" />
@@ -123,18 +130,15 @@ function Navbar(props) {
               </Box>
 
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                {navItems.map((item) => {
-                  if (item === "Riwayat" && !user) return null;
-                    return (
-                      <Button
-                        key={item}
-                        sx={{ color: "#000", fontWeight: 500 }}
-                        onClick={() => navigate("/riwayat")}
-                      >
-                        {item}
-                      </Button>
-                    );
-                })}
+                {navItems.map((item) => (
+                  <Button
+                    key={item}
+                    sx={{ color: "#000", fontWeight: 500 }}
+                    onClick={() => handleNavigate(item)}
+                  >
+                    {item}
+                  </Button>
+                ))}
                 {!user ? (
                   <>
                     <Button sx={{ color: "#000", fontWeight: 500 }} onClick={() => showAuth(1)}>
@@ -197,7 +201,10 @@ function Navbar(props) {
         open={openAuth}
         handleClose={() => setOpenAuth(false)}
         defaultTab={authTab}
-        onLoginSuccess={login}
+        onLoginSuccess={(user) => {
+          login(user);
+          navigate("/dashboard");
+        }}
       />
     </>
   );
