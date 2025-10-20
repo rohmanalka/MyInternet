@@ -107,10 +107,10 @@ const TransaksiXl = () => {
                     <div
                       key={pkg.id}
                       onClick={() => setSelectedPackage(pkg)}
-                      className={`cursor-pointer rounded-lg p-4 transition-all ${
-                        selectedPackage?.id === pkg.id ? "ring-2 ring-red-500" : ""
+                      className={`cursor-pointer rounded-lg p-4 shadow-md hover:-translate-y-2 transition-transform duration-300 ${
+                        selectedPackage?.id === pkg.id ? "ring-1 ring-black" : ""
                       }`}
-                      style={{ background: "linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%)" }}
+                      style={{ background: "linear-gradient(135deg, #5433FF 0%, #20BDFF 100%)" }}
                     >
                       <p className="text-white text-xs mb-1">{pkg.name}</p>
                       <div className="flex items-baseline gap-2 mb-1">
@@ -140,11 +140,12 @@ const TransaksiXl = () => {
                     <div
                       key={method.id}
                       onClick={() => setSelectedPaymentMethod(method)}
-                      className={`cursor-pointer rounded-2xl p-4 text-center transition-all border flex flex-col items-center justify-center
+                      className={`cursor-pointer rounded-2xl p-4 text-center border flex flex-col items-center justify-center
+                        shadow-md hover:-translate-y-2 transition-transform duration-300
                         ${selectedPaymentMethod?.id === method.id
                           ? "ring-2 ring-white bg-white/40"
                           : "bg-white/10 border-white/20 hover:bg-white/20"} 
-                        backdrop-blur-md text-gray-800 shadow-inner`}
+                        backdrop-blur-md text-gray-800`}
                     >
                       <img
                         src={`../src/assets/payment/${method.logo}`}
