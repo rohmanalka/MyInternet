@@ -9,6 +9,11 @@
       "id": "0e62",
       "username": "igaaa",
       "password": "12345"
+    },
+    {
+      "id": "c82e",
+      "username": "test",
+      "password": "12345"
     }
   ],
   "products": [
@@ -115,26 +120,6 @@
   ],
   "transactions": [
     {
-      "id": "1",
-      "userId": "93ee",
-      "noTelp": "2132414215",
-      "email": "rohmanalka@example.com",
-      "product": {
-        "id": "1",
-        "provider": "telkom",
-        "name": "Combo Super",
-        "size": "12GB",
-        "duration": "30 Hari",
-        "price": "Rp 85.000"
-      },
-      "paymentMethod": {
-        "id": "1",
-        "name": "GoPay"
-      },
-      "total": "Rp 85.000",
-      "date": "2025-10-19T16:01:55.733Z"
-    },
-    {
       "id": "4",
       "userId": "93ee",
       "noTelp": "1231244215",
@@ -232,6 +217,33 @@
       },
       "total": "Rp 75.000",
       "date": "2025-10-20T16:01:11.843Z"
+    },
+    {
+      "id": 8,
+      "userId": "93ee",
+      "noTelp": "0986878",
+      "email": "rohmanalka@example.com",
+      "product": {
+        "id": "6",
+        "provider": "tri",
+        "name": "Tri Combo Hemat",
+        "size": "10GB",
+        "duration": "30 Hari",
+        "price": "Rp 75.000",
+        "priceOld": "Rp 90.000",
+        "priceNew": "Rp 75.000",
+        "packageType": [
+          "Bulanan",
+          "Penawaran"
+        ]
+      },
+      "paymentMethod": {
+        "id": "1",
+        "name": "GoPay",
+        "logo": "gopay.png"
+      },
+      "total": "Rp 75.000",
+      "date": "2025-10-20T17:16:03.015Z"
     }
   ]
 }
