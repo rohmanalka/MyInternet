@@ -9,11 +9,13 @@ import TransaksiTri from "./pages/transaksi/TransaksiTri.jsx";
 import RiwayatTransaksi from "./pages/RiwayatTransaksi.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+    <ScrollToTop />
+      <AuthProvider>
         <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -24,8 +26,8 @@ function App() {
         </Routes>
         <ToastContainer />
         <Footer />
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
