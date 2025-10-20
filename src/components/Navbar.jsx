@@ -18,7 +18,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ["Bantuan", "Riwayat"];
+const navItems = ["Riwayat"];
 
 function Navbar(props) {
   const { window } = props;

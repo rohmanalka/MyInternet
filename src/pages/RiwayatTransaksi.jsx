@@ -1,33 +1,39 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useFetch } from "../hooks/useFetch";
+import { useNotify } from "../hooks/useNotify";
 
 const RiwayatTransaksi = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [transactions, setTransactions] = useState([]);
+  const { notifySuccess, notifyError } = useNotify();
+
+  const {
+    data: transactions,
+  } = useFetch(user ? `http://localhost:3000/transactions?userId=${user.id}` : null);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/");
-      return;
-    }
-
-    fetch(`http://localhost:3000/transactions?userId=${user.id}`)
-      .then((res) => res.json())
-      .then((data) => setTransactions(data))
-      .catch((err) => console.error("Error fetching transactions:", err));
+    if (!user) navigate("/");
   }, [user, navigate]);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!window.confirm("Apakah Anda yakin ingin menghapus transaksi ini?")) return;
 
-    fetch(`http://localhost:3000/transactions/${id}`, { method: "DELETE" })
-      .then(() => setTransactions(transactions.filter((trx) => trx.id !== id)))
-      .catch((err) => console.error("Error deleting transaction:", err));
+    try {
+      const res = await fetch(`http://localhost:3000/transactions/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Gagal menghapus transaksi");
+      
+      notifySuccess("Transaksi berhasil dihapus ✅");
+      window.location.reload();
+    } catch (err) {
+      notifyError(err.message);
+    }
   };
 
   return (

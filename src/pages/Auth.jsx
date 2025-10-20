@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNotify } from "/src/hooks/useNotify";
 import {
   Dialog,
   DialogTitle,
@@ -15,6 +16,8 @@ const Auth = ({ open, handleClose, defaultTab = 0, onLoginSuccess }) => {
   const [tabValue, setTabValue] = useState(defaultTab);
   const [formData, setFormData] = useState({ username: "", password: "" });
 
+  const {notifySuccess, notifyError, notifyInfo} = useNotify();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -23,17 +26,17 @@ const Auth = ({ open, handleClose, defaultTab = 0, onLoginSuccess }) => {
     try {
       if (tabValue === 0) {
         await registerUser(formData);
-        alert("Registrasi berhasil! Silakan login.");
+        notifySuccess("Registrasi berhasil! Silakan login.");
         setTabValue(1);
         setFormData({ username: "", password: "" });
       } else {
         const user = await loginUser(formData.username, formData.password);
-        alert(`Selamat datang, ${user.username}!`);
+        notifyInfo(`Selamat datang, ${user.username}!`);
         onLoginSuccess(user);
         handleClose();
       }
     } catch (err) {
-      alert(err.message);
+      notifyError(err.message);
     }
   };
 

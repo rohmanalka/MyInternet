@@ -33,7 +33,9 @@
       "size": "6GB",
       "duration": "7 Hari",
       "price": "Rp 25.000",
-      "packageType": ["Harian"]
+      "packageType": [
+        "Harian"
+      ]
     },
     {
       "id": "3",
@@ -42,7 +44,9 @@
       "size": "8GB",
       "duration": "30 Hari",
       "price": "Rp 50.000",
-      "packageType": ["Bulanan"]
+      "packageType": [
+        "Bulanan"
+      ]
     },
     {
       "id": "4",
@@ -131,27 +135,7 @@
       "date": "2025-10-19T16:01:55.733Z"
     },
     {
-      "id": "2",
-      "userId": "93ee",
-      "noTelp": "235151631",
-      "email": "rohmanalka@example.com",
-      "product": {
-        "id": "3",
-        "provider": "tri",
-        "name": "Tri Kuota",
-        "size": "8GB",
-        "duration": "30 Hari",
-        "price": "Rp 50.000"
-      },
-      "paymentMethod": {
-        "id": "1",
-        "name": "GoPay"
-      },
-      "total": "Rp 50.000",
-      "date": "2025-10-19T16:07:57.644Z"
-    },
-    {
-      "id": 4,
+      "id": "4",
       "userId": "93ee",
       "noTelp": "1231244215",
       "email": "rohmanalka@example.com",
@@ -171,7 +155,7 @@
       "date": "2025-10-19T16:14:05.624Z"
     },
     {
-      "id": 5,
+      "id": "5",
       "userId": "0e62",
       "noTelp": "86362452",
       "email": "igaaa@example.com",
@@ -197,7 +181,7 @@
       "date": "2025-10-19T17:09:34.968Z"
     },
     {
-      "id": 6,
+      "id": "6",
       "userId": "0e62",
       "noTelp": "987654",
       "email": "igaaa@example.com",
@@ -221,6 +205,33 @@
       },
       "total": "Rp 85.000",
       "date": "2025-10-19T17:11:11.904Z"
+    },
+    {
+      "id": 7,
+      "userId": "0450",
+      "noTelp": "0987654",
+      "email": "rohmanalka@example.com",
+      "product": {
+        "id": "6",
+        "provider": "tri",
+        "name": "Tri Combo Hemat",
+        "size": "10GB",
+        "duration": "30 Hari",
+        "price": "Rp 75.000",
+        "priceOld": "Rp 90.000",
+        "priceNew": "Rp 75.000",
+        "packageType": [
+          "Bulanan",
+          "Penawaran"
+        ]
+      },
+      "paymentMethod": {
+        "id": "3",
+        "name": "Dana",
+        "logo": "dana.png"
+      },
+      "total": "Rp 75.000",
+      "date": "2025-10-20T16:01:11.843Z"
     }
   ]
 }

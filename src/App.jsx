@@ -7,6 +7,8 @@ import TransaksiTelkom from "./pages/transaksi/TransaksiTelkom.jsx";
 import TransaksiXl from "./pages/transaksi/TransaksiXl.jsx";
 import TransaksiTri from "./pages/transaksi/TransaksiTri.jsx";
 import RiwayatTransaksi from "./pages/RiwayatTransaksi.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/transaksi/tri" element={<TransaksiTri />} />
           <Route path="/riwayat" element={<RiwayatTransaksi />} />
         </Routes>
+        <ToastContainer />
         <Footer />
       </BrowserRouter>
     </AuthProvider>
