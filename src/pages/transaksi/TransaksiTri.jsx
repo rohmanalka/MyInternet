@@ -132,29 +132,47 @@ const TransaksiTri = () => {
             </Card>
 
             {/* Pembayaran */}
-            <Card className="shadow-md" sx={{ bgcolor: "rgba(255,255,255,0.25)", backdropFilter: "blur(10px)" }}>
+            <Card className="shadow-md rounded-3xl" sx={{ bgcolor: "rgba(255,255,255,0.25)", backdropFilter: "blur(10px)" }}>
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Pilih Metode Pembayaran</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {paymentMethods.map((method) => (
-                    <div
-                      key={method.id}
-                      onClick={() => setSelectedPaymentMethod(method)}
-                      className={`cursor-pointer rounded-2xl p-4 text-center border flex flex-col items-center justify-center
-                        shadow-md hover:-translate-y-2 transition-transform duration-300
-                        ${selectedPaymentMethod?.id === method.id
-                          ? "ring-2 ring-white bg-white/40"
-                          : "bg-white/10 border-white/20 hover:bg-white/20"} 
-                        backdrop-blur-md text-gray-800`}
-                    >
-                      <img
-                        src={`../src/assets/payment/${method.logo}`}
-                        alt={method.name}
-                        className="w-10 h-10 object-contain mb-2 opacity-90"
-                      />
-                      <p className="text-sm font-semibold">{method.name}</p>
-                    </div>
-                  ))}
+                  {paymentMethods.map((method) => {
+                    const colorMap = {
+                      GoPay: "from-cyan-400 to-blue-500",
+                      OVO: "from-purple-500 to-indigo-600",
+                      Dana: "from-sky-400 to-blue-500",
+                      "Transfer Bank": "from-gray-400 to-gray-600",
+                    };
+                    const selected = selectedPaymentMethod?.id === method.id;
+                    const gradient = colorMap[method.name] || "from-gray-300 to-gray-400";
+
+                    return (
+                      <div
+                        key={method.id}
+                        onClick={() => setSelectedPaymentMethod(method)}
+                        className={`cursor-pointer rounded-2xl p-4 text-center border flex flex-col items-center justify-center
+                          shadow-md hover:-translate-y-2 transition-transform duration-300
+                          ${selected
+                            ? `bg-gradient-to-br ${gradient} text-white`
+                            : "bg-white/10 border-white/20 hover:bg-white/30 text-gray-800"
+                          }
+                        `}
+                      >
+                        <div
+                          className={`p-3 rounded-full mb-2 ${
+                            selected ? "bg-white/20" : "bg-white/40"
+                          }`}
+                        >
+                          <img
+                            src={`../src/assets/payment/${method.logo}`}
+                            alt={method.name}
+                            className="w-10 h-10 object-contain"
+                          />
+                        </div>
+                        <p className="text-sm font-semibold tracking-wide">{method.name}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
