@@ -10,13 +10,14 @@ const LandingPage = () => {
   const { user, showAuth } = useAuth();
   const [products, setProducts] = useState([]);
 
-  const handleProviderClick = (provider) => {
-    if (user) {
-      navigate(`/transaksi/${provider}`);
-    } else {
-      showAuth(1);
-    }
-  };
+const handleProviderClick = (provider) => {
+  if (user) {
+    navigate(`/transaksi/${provider}`);
+  } else {
+    localStorage.setItem("redirectAfterLogin", `/transaksi/${provider}`);
+    showAuth(1);
+  }
+};
 
 useEffect(() => {
   fetch("/db.json")
@@ -122,9 +123,10 @@ useEffect(() => {
                   .filter(p => p.priceOld)
                   .map((item, idx) => (
                   <div
-                      key={idx}
-                      className="bg-white rounded-2xl shadow-lg w-48 p-4 relative overflow-hidden 
-                      hover:-translate-y-2 transition-transform duration-300"
+                    key={idx}
+                    onClick={() => handleProviderClick(item.provider)}  // ⬅️ Tambahkan ini
+                    className="bg-white rounded-2xl shadow-lg w-48 p-4 relative overflow-hidden 
+                    hover:-translate-y-2 transition-transform duration-300 cursor-pointer"
                   >
                   <div
                       className={`absolute top-0 left-0 w-full py-1 text-xs text-white font-semibold ${
