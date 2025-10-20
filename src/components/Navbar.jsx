@@ -117,7 +117,8 @@ function Navbar(props) {
                 <img 
                   src="src/assets/images/Logo.png"  
                   alt="Logo MyInternet" 
-                  style={{ height: 40 }} 
+                  style={{ height: 40, cursor: "pointer" }} 
+                  onClick={() => navigate("/")} 
                 />
               </Box>
 
